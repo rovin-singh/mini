@@ -1,5 +1,7 @@
 const express=require("express");
 const { connection } = require("./config/db");
+const { authentication } = require("./Middleware/authentication");
+const { productRoute } = require("./Route/product");
 const { userRoute } = require("./Route/user");
 const app = express();
 app.use(express.json());
@@ -11,6 +13,12 @@ app.get("/",(req,res)=>{
 // user route 
 
 app.use("/user",userRoute);
+
+// Product route
+
+app.use(authentication)
+app.use("/product",productRoute);
+
 
 app.listen(PORT,async()=>{
     try{
